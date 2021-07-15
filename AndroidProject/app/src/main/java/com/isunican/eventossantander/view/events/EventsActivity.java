@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EventsActivity extends AppCompatActivity implements IEventsView {
 
-    private EventsPresenter presenter;
+    private IEventsPresenter presenter;
     private EventArrayAdapter adapter;
 
     @Override

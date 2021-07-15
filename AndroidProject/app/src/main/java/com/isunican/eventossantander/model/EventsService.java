@@ -7,7 +7,7 @@ public class EventsService {
 
     private static EventsAPI eventosService;
 
-    public static EventsAPI getEventosServiceInstance() {
+    public static EventsAPI getEventsServiceInstance() {
         if (eventosService == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("http://datos.santander.es/")

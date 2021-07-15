@@ -21,10 +21,10 @@ public class EventsPresenter implements IEventsPresenter {
     }
 
     private void loadData() {
-        EventsAPI eventosService = EventsService.getEventosServiceInstance();
-        Call<EventsResponse> callEventos = eventosService.getEventosResponse();
+        EventsAPI eventosService = EventsService.getEventsServiceInstance();
+        Call<EventsResponse> callEvents = eventosService.getEventosResponse();
 
-        callEventos.enqueue(new Callback<EventsResponse>() {
+        callEvents.enqueue(new Callback<EventsResponse>() {
             @Override
             public void onResponse(Call<EventsResponse> call, Response<EventsResponse> response) {
                 EventsResponse body = response.body();
