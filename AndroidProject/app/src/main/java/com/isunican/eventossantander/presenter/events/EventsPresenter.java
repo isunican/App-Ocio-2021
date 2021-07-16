@@ -1,41 +1,31 @@
 package com.isunican.eventossantander.presenter.events;
 
 import com.isunican.eventossantander.model.Event;
-import com.isunican.eventossantander.model.EventsAPI;
-import com.isunican.eventossantander.model.EventsResponse;
-import com.isunican.eventossantander.model.EventsService;
-import com.isunican.eventossantander.view.events.IEventsPresenter;
-import com.isunican.eventossantander.view.events.IEventsView;
+import com.isunican.eventossantander.model.EventsRepository;
+import com.isunican.eventossantander.view.Listener;
+import com.isunican.eventossantander.view.events.IEventsContract;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.List;
 
-public class EventsPresenter implements IEventsPresenter {
+public class EventsPresenter implements IEventsContract.Presenter {
 
-    private final IEventsView view;
+    private final IEventsContract.View view;
 
-    public EventsPresenter(IEventsView view) {
+    public EventsPresenter(IEventsContract.View view) {
         this.view = view;
         loadData();
     }
 
     private void loadData() {
-        EventsAPI eventosService = EventsService.getEventsServiceInstance();
-        Call<EventsResponse> callEvents = eventosService.getEventosResponse();
-
-        callEvents.enqueue(new Callback<EventsResponse>() {
+        EventsRepository.getEvents(new Listener<List<Event>>() {
             @Override
-            public void onResponse(Call<EventsResponse> call, Response<EventsResponse> response) {
-                EventsResponse body = response.body();
-                if (body != null) {
-                    view.onEventsLoaded(body.getEvents());
-                    view.onLoadSuccess();
-                }
+            public void onSuccess(List<Event> data) {
+                view.onEventsLoaded(data);
+                view.onLoadSuccess();
             }
 
             @Override
-            public void onFailure(Call<EventsResponse> call, Throwable t) {
+            public void onFailure() {
                 view.onLoadError();
             }
         });

@@ -1,9 +1,9 @@
-package com.isunican.eventossantander.model;
+package com.isunican.eventossantander.model.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class EventsService {
+public class EventsAPIService {
 
     private static EventsAPI eventosService;
 

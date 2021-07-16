@@ -11,9 +11,9 @@ import com.isunican.eventossantander.presenter.events.EventsPresenter;
 
 import java.util.List;
 
-public class EventsActivity extends AppCompatActivity implements IEventsView {
+public class EventsActivity extends AppCompatActivity implements IEventsContract.View {
 
-    private IEventsPresenter presenter;
+    private IEventsContract.Presenter presenter;
     private EventArrayAdapter adapter;
 
     @Override
