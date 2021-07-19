@@ -10,7 +10,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       
-      # Need to make gradlew executable
+      # I Need to make gradlew executable
       - name: Make gradlew executable
         working-directory: ./AndroidProject
         run: chmod +x ./gradlew
@@ -19,16 +19,35 @@ jobs:
       - name: Android units tests
         working-directory: ./AndroidProject
         run: ./gradlew testDebugUnitTest
+        
+      # Make unit tests results available to the 'report' job
+      - name: Upload Test Reports Folder
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }} # IMPORTANT: Upload reports regardless of status
+        with:
+          name: reports
+          working-directory: ./AndroidProject
+          path: app/build/test-results # path to where the xml test results are stored
       
       # Integration Tests
       - name: Android integration tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 27
+          api-level: 27  # api level > 27 seems to be failing at sdk installation step
           working-directory: ./AndroidProject
           script: ./gradlew connectedCheck
-      
-      # Print a report of the tests
+        
+        
+  # this has to be run in a different job because android-test-report-action requires ubuntu
+  report:
+    runs-on: ubuntu-latest
+    needs: android-tests-job # The report job will run after android-tests-job
+    if: ${{ always() }} # IMPORTANT: Execute report job regardless of status
+    steps:
+      - name: Download Test Reports Folder
+        uses: actions/download-artifact@v2
+        with:
+          name: reports
+
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
-        if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
