@@ -5,10 +5,14 @@ on:
             - master
 jobs:
   android-test-job:
-    runs-on: macos-latest
+    runs-on: windows-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
 
       - name: run tests
-        run: cd AndroidProject ; ./gradlew test
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          working-directory: ./AndroidProject
+          script: ./gradlew connectedCheck
