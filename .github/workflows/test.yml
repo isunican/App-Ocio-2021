@@ -26,8 +26,7 @@ jobs:
         if: ${{ always() }} # IMPORTANT: Upload reports regardless of status
         with:
           name: reports
-          working-directory: ./AndroidProject
-          path: app/build/test-results # path to where the xml test results are stored
+          path: AndroidProject/app/build/test-results # path to where the xml test results are stored
       
       # Integration Tests
       - name: Android integration tests
