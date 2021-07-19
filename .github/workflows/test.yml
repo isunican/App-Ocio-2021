@@ -13,6 +13,6 @@ jobs:
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 27
+          api-level: 28
           working-directory: ./AndroidProject
-          script: chmod +x ./gradlew ; ./gradlew connectedCheck
+          script: chmod +x ./gradlew ; ./gradlew test ; ./gradlew connectedCheck
