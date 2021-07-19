@@ -11,4 +11,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: run tests
-        run: ./gradlew test
+        run: cd AndroidProject ; ./gradlew test
