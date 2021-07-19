@@ -5,17 +5,14 @@ on:
             - master
 jobs:
   android-test-job:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
         
-      - name: Make gradlew executable
-        run: cd AndroidProject ; chmod +x ./gradlew
-
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
           working-directory: ./AndroidProject
-          script: ./gradlew connectedCheck
+          script: chmod +x ./gradlew ; ./gradlew connectedCheck
