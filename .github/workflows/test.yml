@@ -1,18 +1,29 @@
-name: android-test
+name: android-tests
 on:
     push:
         branches:
             - master
 jobs:
-  android-test-job:
+  android-tests-job:
     runs-on: macos-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
-        
-      - name: run tests
+      
+      # Need to make gradlew executable
+      - name: Make gradlew executable
+        working-directory: ./AndroidProject
+        run: chmod +x ./gradlew
+      
+      # Execute unit tests
+      - name: Android units tests
+        working-directory: ./AndroidProject
+        run: ./gradlew testDebugUnitTest
+      
+      # Integration Tests
+      - name: Android integration tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 28
           working-directory: ./AndroidProject
-          script: chmod +x ./gradlew ; ./gradlew test ; ./gradlew connectedCheck
+          script: ./gradlew connectedCheck
