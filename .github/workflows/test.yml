@@ -24,6 +24,11 @@ jobs:
       - name: Android integration tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 28
+          api-level: 27
           working-directory: ./AndroidProject
           script: ./gradlew connectedCheck
+      
+      # Print a report of the tests
+      - name: Android Test Report
+        uses: asadmansr/android-test-report-action@v1.2.0
+        if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
