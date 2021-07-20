@@ -46,39 +46,39 @@ jobs:
                 profile: pixel_2
                 script: ./gradlew connectedCheck
                 
-    android-release-apk:
-        needs: [android-unit-tests, android-integration-tests]
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout
-              uses: actions/checkout@v2
+    # android-release-apk:
+        # needs: [android-unit-tests, android-integration-tests]
+        # runs-on: ubuntu-latest
+        # steps:
+            # - name: checkout
+              # uses: actions/checkout@v2
           
-            # I Need to make gradlew executable
-            - name: Make gradlew executable
-              working-directory: ./AndroidProject
-              run: chmod +x ./gradlew
+            # # I Need to make gradlew executable
+            # - name: Make gradlew executable
+              # working-directory: ./AndroidProject
+              # run: chmod +x ./gradlew
               
-            - name: Build Release APK
-              working-directory: ./AndroidProject
-              run: ./gradlew assembleDebug
+            # - name: Build Release APK
+              # working-directory: ./AndroidProject
+              # run: ./gradlew assembleDebug
             
-            - name: Create Release
-              id: create_release
-              uses: actions/create-release@v1
-              env:
-                GITHUB_TOKEN: ${{ secrets.TOKEN }} 
-              with:
-                tag_name: v.${{ github.run_id }}
-                release_name: Release ${{ github.id }} 
+            # - name: Create Release
+              # id: create_release
+              # uses: actions/create-release@v1
+              # env:
+                # GITHUB_TOKEN: ${{ secrets.TOKEN }} 
+              # with:
+                # tag_name: v.${{ github.run_id }}
+                # release_name: Release ${{ github.id }} 
           
-            - name: Upload Release APK
-              id: upload_release_asset
-              uses: actions/upload-release-asset@v1.0.1
-              env:
-                GITHUB_TOKEN: ${{ secrets.TOKEN }}
-              with:
-                  upload_url: ${{ steps.create_release.outputs.upload_url }}
-                  asset_path: ./AndroidProject/app/build/outputs/apk/debug/app-debug.apk
-                  asset_name: ociosantander.apk
-                  asset_content_type: application/zip
+            # - name: Upload Release APK
+              # id: upload_release_asset
+              # uses: actions/upload-release-asset@v1.0.1
+              # env:
+                # GITHUB_TOKEN: ${{ secrets.TOKEN }}
+              # with:
+                  # upload_url: ${{ steps.create_release.outputs.upload_url }}
+                  # asset_path: ./AndroidProject/app/build/outputs/apk/debug/app-debug.apk
+                  # asset_name: ociosantander.apk
+                  # asset_content_type: application/zip
         
